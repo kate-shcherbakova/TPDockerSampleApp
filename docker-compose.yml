@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+   nginx-proxy:
+      image: jwilder/nginx-proxy
+      ports:
+         - "80:80"
+      volumes:
+         - /run/docker.sock:/tmp/docker.sock:ro
+
+   trollface:
+      expose:
+         - 8081
+      build:
+         context: .
+         dockerfile: Dockerfile
+      deploy:
+         replicas: 4
+      environment:
+         VIRTUAL_HOST: m
+         VIRTUAL_PORT: "8081"

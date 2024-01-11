@@ -33,7 +33,7 @@ public class Main {
 		//Mat original = Imgcodecs.imread("/home/barais/Images/PhotosLancieux/IMG_4514.JPG");
 
 //		drawNewImage(original);
-		 Server server = new Server(8080);
+		 Server server = new Server(8081);
 
 		    WebAppContext root = new WebAppContext();
 		    root.setContextPath("/");

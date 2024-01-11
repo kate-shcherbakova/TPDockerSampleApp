@@ -1,0 +1,30 @@
+# specify the base image
+FROM maven:3.8-openjdk-11-slim
+
+# set the working directory
+WORKDIR /app
+# copy application files to the container
+COPY . /app
+
+#RUN apt-get update
+
+#RUN apt install -y software-properties-common
+
+#RUN add-apt-repository 'deb [trusted=yes] http://security.ubuntu.com/ubuntu xenial-security main'
+
+# specify dependencies
+RUN apt-get update && \
+    #apt-get install -y openjdk-8-jdk && \
+    #apt-get install -y maven && \
+    #apt-get install -f libpng16-16 && \
+    #apt-get install -f libjasper1 && \
+    #apt-get install -y libdc1394-dev
+    apt-get install -y libjpeg-dev libpng-dev
+
+
+RUN mvn install:install-file -Dfile=./lib/opencv-3410.jar -DgroupId=org.opencv -DartifactId=opencv -Dversion=3.4.10 -Dpackaging=jar
+
+RUN mvn package
+
+# define the default command
+CMD ["java", "-Djava.library.path=lib/", "-jar", "target/fatjar-0.0.1-SNAPSHOT.jar"]
